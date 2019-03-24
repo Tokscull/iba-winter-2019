@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <!--Spacecraft-->
+    <bean name="spaceX" class="com.iba.task1.entity.Spacecraft">
+        <property name="shuttleName" value="SpaceX"/>
+        <property name="maxCapacity" value="#{ T(java.lang.Math).random() * 100.0 }"/>
+        <property name="countFlight" value="#{ T(java.lang.Math).random() * 1000.0 }"/>
+    </bean>
+
+    <bean name="nasaShuttle" class="com.iba.task1.entity.Spacecraft">
+        <property name="shuttleName" value="NASAShuttle"/>
+        <property name="maxCapacity" value="#{ T(java.lang.Math).random() * 100.0 }"/>
+        <property name="countFlight" value="#{ T(java.lang.Math).random() * 1000.0 }"/>
+    </bean>
+
+
+    <bean name="paracone" class="com.iba.task1.entity.Spacecraft">
+        <property name="shuttleName" value="Paracone"/>
+        <property name="maxCapacity" value="#{ T(java.lang.Math).random() * 100.0 }"/>
+        <property name="countFlight" value="#{ T(java.lang.Math).random() * 1000.0 }"/>
+    </bean>
+
+    <util:list id="shuttles">
+        <ref bean="spaceX"/>
+        <ref bean="nasaShuttle"/>
+        <ref bean="paracone"/>
+    </util:list>
+
+
+    <!--Astronauts-->
+    <bean name="elonMusk" class="com.iba.task1.entity.Astronauts">
+        <property name="name" value="Elon Musk"/>
+        <property name="age" value="#{ T(java.lang.Math).random() * 100.0 }"/>
+    </bean>
+
+    <bean name="pewdiepie" class="com.iba.task1.entity.Astronauts">
+        <property name="name" value="Pewdiepie"/>
+        <property name="age" value="#{ T(java.lang.Math).random() * 100.0 }"/>
+    </bean>
+
+    <bean name="ricardoMilos" class="com.iba.task1.entity.Astronauts">
+        <property name="name" value="Ricardo Milos"/>
+        <property name="age" value="#{ T(java.lang.Math).random() * 100.0 }"/>
+    </bean>
+
+    <util:list id="astronauts">
+        <ref bean="elonMusk"/>
+        <ref bean="pewdiepie"/>
+        <ref bean="ricardoMilos"/>
+    </util:list>
+
+
+    <!--cosmoTripService-->
+    <bean name="cosmoTripService" class="com.iba.task1.entity.Trip">
+        <property name="shuttle" value="#{spaceX.getRandomShuttle(shuttles)}"/>
+        <property name="astronaut" value="#{elonMusk.getRandomAstronaut(astronauts)}"/>
+    </bean>
+
+
+    <!--Emulation-->
+    <bean name="emulationService" class="com.iba.task1.service.Emulation">
+        <property name="shuttle" value="#{spaceX}"/>
+        <property name="astronaut" value="#{elonMusk.getRandomAstronaut(astronauts)}"/>
+        <property name="startPoint" value="Earth"/>
+        <property name="destination" value="Moon"/>
+        <property name="totalDistance" value="384400"/>
+        <property name="leftDistance" value="384400"/>
+    </bean>
+
+
+</beans>
